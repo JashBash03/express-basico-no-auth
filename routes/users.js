@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const path = require('path');
 const { createUser, getUser, getAllUsers, updateUser, deleteUser, validateUser } = require('../database');
-const cookieParser = require('cookie-parser');
 
 router.post('/users', (req, res) => {
     const user = req.body.user;
@@ -50,17 +48,6 @@ router.delete('/users/:user', (req, res) => {
     }
 });
 
-router.post('/register', (req, res) => {
-    const user = req.body.user;
-    const password = req.body.password;
-    const userObj = getUser(user);
-    if (userObj) {
-        res.status(409).send('Usuario ya existe');
-    } else {
-        createUser(user, password);
-        res.status(201).send('Usuario creado');
-    }
-});
 
 router.post('/login', (req, res) => {
     const user = req.body.user;
